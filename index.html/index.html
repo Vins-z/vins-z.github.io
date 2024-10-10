@@ -200,6 +200,16 @@
             resize: vertical;
             min-height: 100px;
         }
+        .Submit-button {
+            background-color: #0b8793;
+            color: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
         footer {
             background-color: rgba(0, 0, 0, 0.8);
             padding: 2rem 10%;
@@ -357,17 +367,20 @@
                 <div class="project-item" data-description="Research on leveraging Machine Learning to integrate ESG factors in credit risk management models.">
                     <h3>ESG in Credit Risk Management</h3>
                 </div>
-                <div class="project-item" data-description="Description: A Machine Learning model that uses Artificial Neural Networks(ANNs) to train on a company’s past sales data and predict future sales. Also, it provides insights for improving future sales. Programmed Using: Python, Tensorflow, Keras, numpy, PyQT5.">
-                    <h3>ANN Sales Prediction Model</h3>
-                </div>
-                <div class="project-item" data-description="Creating modern, responsive websites using HTML5, CSS3, and JavaScript.">
-                    <h3>Responsive Web Design</h3>
+                <div class="project-item" data-description="Description: A Machine Learning model that uses Artificial Neural Networks(ANNs) to train on a company’s past sales data and predict future sales.
+                Also, it provides insights for improving future sales. 
+                Programmed Using: Python, Tensorflow, Keras, numpy, PyQT5.">
+                    <h3>M-fine: AI-Powered Sales Prediction Platform</h3>
                 </div>
                 <div class="project-item" data-description="Implemented a convolutional neural network using PyTorch for automated diagnosis of chest X-rays.">
                     <h3>Deep Learning for Medical Imaging</h3>
                 </div>
-                <div class="project-item" data-description="Fine-tuned BERT model using PyTorch for sentiment analysis on social media data.">
-                    <h3>Sentiment Analysis with BERT</h3>
+                <div class="project-item" data-description="• Designed CNN achieving 97% training accuracy with 3 convolutional layers and batch normalization 
+                • Processed 70,000 images using data augmentation and normalization techniques
+                • Implemented real-time image processing with OpenCV for edge detection and contour finding 
+                • Created interactive GUI for digit drawing and image upload with probability distribution display 
+                • Optimized for mobile deployment usingTensorFlow Lite, reducing model size by 75%">
+                    <h3>MNIST Digit Classifier: Deep Learning Image Recognition</h3>
                 </div>
             </div>
         </section>
@@ -385,12 +398,15 @@
 
         <section id="contact" class="section contact">
             <h2>Get In Touch</h2>
-            <form id="contactForm">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" required></textarea>
-                <button type="submit" class="btn">Send Message</button>
+            <!-- modify this form HTML and place wherever you want your form -->
+            <form action="https://formbold.com/s/oe5PR" method="POST">
+                <input type="email" placeholder="Email" name="email">
+                <input type="text" placeholder="Subject" name="subject">
+                <textarea name="message" placeholder="Type your message"></textarea>
+                <!-- your other form fields go here -->
+                <button class= "Submit-button" type="submit" >Send Message</button>
             </form>
+  
         </section>
     </main>
 
@@ -464,34 +480,6 @@
             });
 
         });
-
-        // Contact form submission handler
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const name = document.querySelector('input[type="text"]').value;
-            const email = document.querySelector('input[type="email"]').value;
-            const message = document.querySelector('textarea').value;
-
-            fetch('http://localhost:3000/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name, email, message })
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert('Thank you for your message! I will get back to you soon.');
-                this.reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('There was an error sending your message. Please try again.');
-            });
-        });
-
-        // Modal functionality
         const modal = document.getElementById('projectModal');
         const modalTitle = document.getElementById('modalTitle');
         const modalDescription = document.getElementById('modalDescription');
@@ -532,6 +520,3 @@
     </script>
 </body>
 </html>
-
-
-
