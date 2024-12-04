@@ -1,0 +1,531 @@
+/* Your CSS styles here */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+:root {
+    --primary: #0088cc;
+    --text: #000000;
+    --bg: #eeeeee;
+    --secondary: #000000d2;
+    --tertiary: #979797;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;;
+    z-index: 103;
+    background-color: var(--text);
+    color: var(--bg);
+    font-size: 1.2rem;
+    transition: background-color 0.5s ease, padding 0.8s ease;
+}
+
+.navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.85); 
+    padding: 0.9rem; 
+    z-index: 103;
+
+}
+
+
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 1 auto;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    text-decoration:var(--tertiary);
+    z-index: 101;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: var(--bg);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 102;
+    font-size: 1.2rem;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 102;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-links {
+    text-align: center;
+    motion: auto;
+}
+
+.menu-links a {
+    display: block;
+    font-size: 2rem;
+    color: var(--bg);
+    text-decoration: none;
+    margin: 1.5rem 0;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.menu-overlay.active .menu-links a {
+    transform: translateY(0);
+    animation: alternate-reverse;
+    opacity: 0.7;
+}
+.canvas{
+    z-index: 1;
+}
+.hero {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    position: relative;
+    overflow: auto;
+}
+
+.hero-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 5rem;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeUp 1s ease forwards;
+    color: var(--text);
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--primary);
+    color: var(--bg);
+    padding: 0.8rem 1.5rem;
+    margin: 1rem 0.5rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(50px);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+
+
+.hero p {
+    font-size: 2.4rem;
+    color: rgba(0, 0, 0, 0.7);
+    max-width: 600px;
+    margin-bottom: 2.3rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeUp 1s ease forwards 0.5s;
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    margin: 0.5rem 0.5rem 0.5rem;
+    background: var(--text);
+    color: var(--bg);
+    text-decoration:none;
+    border-radius: 30px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeUp 1s ease forwards 0.4s;
+    transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+    background: var(--primary);
+    transform: translateY();
+    color: var(--bg);
+}
+
+.projects {
+    padding: 8rem 2rem;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.project-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.project-card.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.project-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.project-card:hover img {
+    transform: scale(1.2);
+}
+
+.project-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    transform: translateY(100%);
+    transition: all 0.5s ease;
+}
+
+.project-card:hover .project-info {
+    transform: translateY(10);
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(10);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    .menu-links a {
+        font-size: 2.5rem;
+    }
+}
+
+.section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 10%;
+    text-align: center;
+}
+
+#element {
+    font-size: 1.5rem;
+    color: var(--primary);
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1s ease 1s forwards;
+}
+
+
+.btn:first-of-type {
+    animation: fadeInUp 1s ease 1.5s forwards;
+}
+
+.btn:last-of-type {
+    animation: fadeInUp 1s ease 2s forwards;
+}
+
+.btn:hover {
+    background-color: var(--text);
+    color: var(--bg);
+}
+
+.skills, .projects, .interests, .contact, .education, .certifications {
+    flex-direction: column;
+}
+
+.skills h2, .projects h2, .interests h2, .contact h2, .education h2, .certifications h2 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+}
+
+.skill-list, .project-list, .interest-list, .education-list, .certification-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.skill-item, .project-item, .interest-item, .education-item, .certification-item{
+    background-color:var(--secondary);
+    padding: 2.3rem;
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.7s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    box-shadow: 0 1px 4px var(--tertiary);
+    color:var(--bg);
+}
+
+.skill-item:hover, .interest-item:hover, .education-item:hover, .certification-item:hover {
+    transform: translateY(-20px);
+    box-shadow: 0 10px 25px var(--tertiary);;
+    box-sizing: border-box;
+    transition: all 0.8s ease;
+}
+.project-item:hover{
+    transform: translateY(-20px);
+    box-shadow: 0 10px 25px var(--tertiary);;
+    box-sizing: border-box;
+    transition: all 0.8s ease;
+}
+
+.project-item {
+    width: calc(33.33% - 1rem);
+    margin-bottom: 2rem;
+
+}
+
+.project-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.contact form {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    z-index: 100;
+}
+
+.contact input, .contact textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: var(--text);
+    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.532);
+}
+
+.contact textarea {
+    resize: vertical;
+    min-height: 100px;
+    color:var(--text);
+}
+
+.Submit-button {
+    background-color:var(--primary);
+    color: var(--bg);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.Submit-button:hover{
+    background-color: var(--text);
+    color: var(--bg);
+    z-index: 100;
+}
+
+footer {
+    background-color: var(--text);
+    padding: 2rem 10%;
+    text-align: center;
+    color: var(--bg);
+    z-index: 100;
+}
+
+.social-icons {
+    position: relative;
+    z-index: 101;
+}
+
+.social-icons a {
+    position: relative;
+    color: var(--bg);
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+    z-index: 102;
+    display: inline-block;
+}
+
+.social-icons a:hover {
+    color: var(--primary);
+    z-index: 101;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInUp 1s ease forwards;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 1rem 5%;
+    }
+
+    .section {
+        padding: 5rem 5%;
+    }
+
+    .intro h1 {
+        font-size: 2.5rem;
+    }
+
+    .intro h2 {
+        font-size: 1.5rem;
+    }
+
+    #element {
+        font-size: 1.2rem;
+    }
+
+    .project-item {
+        width: 100%;
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: var(--secondary);
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background-color: var(--bg);
+    opacity: 100%;
+    margin: 15% auto;
+    padding: 50px;
+    border: 2px solid var(--tertiary);
+    width: 80%;
+    max-width: 600px;
+    border-radius: 5px;
+    color: var(--text);
+    opacity: 1;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+.close {
+    color: var(--tertiary);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.5s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--text);
+    text-decoration: none;
+    cursor: pointer;
+    
+}
+
+.modal.show {
+    display: block;
+    opacity: 0.975;
+}
+
+.modal-content.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cube-container {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    overflow:visible;
+}
+
+@media (max-width: 768px) {
+    .cube-container {
+        width: 100%; /* Ensure it takes full width on smaller screens */
+        height: 100%; /* Adjust height to maintain aspect ratio */
+        padding:auto; /* Add some padding for spacing */
+        display: flex; /* Use flexbox for responsive layout */
+        justify-content: center; /* Center content horizontally */
+        align-items: center; /* Center content vertically */
+    }
+}
