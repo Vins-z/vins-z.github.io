@@ -1,4 +1,10 @@
 // Loading Screen Setup
+let torus;
+let torus2;
+let torus3;
+let touchStart;
+let touchEnd;
+let render;
 const loadingScreen = document.createElement('div');
 loadingScreen.id = 'loading-screen';
 loadingScreen.style.cssText = `
