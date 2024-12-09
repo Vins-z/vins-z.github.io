@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(renderer.domElement);
 
     // Create abstract shapes
-    const geometry1 = new THREE.TorusGeometry(3.5, 3.5, 35, 35);
+    const geometry1 = new THREE.TorusGeometry(3.5, 3.5, 38, 38);
     const material1 = new THREE.MeshBasicMaterial({
         color: "#666666",
         wireframe: true,
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const torus = new THREE.Mesh(geometry1, material1);
     scene.add(torus);
 
-    const geometry2 = new THREE.TorusGeometry(3.5, 3.5, 35, 35);
+    const geometry2 = new THREE.TorusGeometry(3.5, 3.5, 38, 38);
     const material2 = new THREE.MeshBasicMaterial({
         color: "#666666",
         wireframe: true,
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const torus2 = new THREE.Mesh(geometry2, material2);
     scene.add(torus2);
 
-    const geometry3 = new THREE.TorusGeometry(3.5, 3.5, 35, 35);
+    const geometry3 = new THREE.TorusGeometry(3.5, 3.5, 38, 38);
     const material3 = new THREE.MeshBasicMaterial({
         color: "#666666",
         wireframe: true,
@@ -327,34 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
         camera.lookAt(scene.position);
         });
     });
-    // Handle mobile device object resize
-    window.addEventListener('resize', () => {
-        const scaleFactor = Math.min(window.innerWidth / 1920, 1); // Auto scale based on window width, max scale is 1
-
-        // Scale objects based on scaleFactor
-        torus.scale.set(scaleFactor, scaleFactor, scaleFactor);
-        torus2.scale.set(scaleFactor, scaleFactor, scaleFactor);
-        torus3.scale.set(scaleFactor, scaleFactor, scaleFactor);
-
-        // Adjust positions for better view
-        torus.position.y = 2 * scaleFactor;
-        torus2.position.y = 0;
-        torus3.position.y = -2 * scaleFactor;
-
-        // Adjust rotation speed based on scaleFactor
-        torus.rotation.x = 0.005 * scaleFactor;
-        torus2.rotation.y = -0.005 * scaleFactor;
-        torus3.rotation.z = 0.005 * scaleFactor;
-
-        // Adjust camera settings
-        camera.position.z = 5 + (3 * (1 - scaleFactor)); // Closer for smaller screens
-        camera.fov = 75 - (15 * (1 - scaleFactor)); // Wider field of view for smaller screens
-        camera.updateProjectionMatrix();
-
-        // Force renderer update
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.render(scene, camera);
-    });
+    
 
     // Initial check on load
     window.dispatchEvent(new Event('resize'));
