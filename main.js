@@ -311,13 +311,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchmove', (event) => {
         touchEnd = event.touches[0].clientY;
         if (touchEnd - touchStart > 0) {
-            torus.material.opacity = 0.1;
-            torus2.material.opacity = 0.1;
-            torus3.material.opacity = 0.1;
+            torus.material.opacity = 0.05;
+            torus2.material.opacity = 0.05;
+            torus3.material.opacity = 0.05;
         } else {
-            torus.material.opacity = 0.2;
-            torus2.material.opacity = 0.2;
-            torus3.material.opacity = 0.2;
+            torus.material.opacity = 0.05;
+            torus2.material.opacity = 0.05;
+            torus3.material.opacity = 0.05;
         }
     });
     // Handle mouse move events
