@@ -5,6 +5,23 @@ let backgroundScene, backgroundCamera, backgroundRenderer, backgroundComposer;
 let isMobile = false;
 let globalThreeContainer; // Add global reference to the Three.js container
 
+// Declare global variables that can be accessed by event listeners and animation
+let camera;
+let renderer;
+let composer;
+let mouseX = 0;
+let mouseY = 0;
+let targetMouseX = 0;
+let targetMouseY = 0;
+let trails = [];
+let trailPointsCount;
+let morphMesh;
+let fluidMesh;
+let fluidMaterial;
+let scene;
+let pointLight1;
+let pointLight2;
+
 // Check if device is mobile
 function checkMobile() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
@@ -302,47 +319,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Create mouse tracking for interactive elements
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetMouseX = 0;
-    let targetMouseY = 0;
-    
-    // Add mouse movement tracking for cursor-based rotation
+    // Add mouse movement tracking for cursor-based rotation using global variables
     document.addEventListener('mousemove', (event) => {
         // Calculate normalized mouse position (-1 to 1)
         targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
         targetMouseY = (event.clientY / window.innerHeight) * 2 - 1;
-    });
-    
-    // Add touch support for mobile devices
-    document.addEventListener('touchmove', (event) => {
-        if (event.touches.length > 0) {
-            // Calculate normalized touch position (-1 to 1)
-            targetMouseX = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
-            targetMouseY = (event.touches[0].clientY / window.innerHeight) * 2 - 1;
-            
-            // Prevent default only if touching the three.js container
-            if (event.target === renderer.domElement) {
-                event.preventDefault();
-            }
-        }
-    }, { passive: false });
-    
-    // Handle window resize events
-    window.addEventListener('resize', () => {
-        // Update camera
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        
-        // Update renderer and composer
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, useSimpleRendering ? 1.5 : 4));
-        
-        // Update composer if it exists
-        if (composer) {
-            composer.setSize(window.innerWidth, window.innerHeight);
-        }
     });
 });
 
@@ -364,10 +345,10 @@ function initMainScene(loadingScreen, isMobile) {
         const useSimpleRendering = isMobile;
         
         // Main scene setup
-        const scene = new THREE.Scene();
+        scene = new THREE.Scene();
         
         // Create a perspective camera with better parameters
-        const camera = new THREE.PerspectiveCamera(
+        camera = new THREE.PerspectiveCamera(
             60, 
             window.innerWidth / window.innerHeight, 
             0.1, 
@@ -383,7 +364,7 @@ function initMainScene(loadingScreen, isMobile) {
         const scrollZoomFactor = 0.1; // How much zoom per scroll unit
         
         // Set up renderer with anti-aliasing and high pixel ratio
-        const renderer = new THREE.WebGLRenderer({ 
+        renderer = new THREE.WebGLRenderer({ 
             antialias: !useSimpleRendering, // Disable anti-aliasing on mobile
             alpha: true,
             powerPreference: "high-performance"
@@ -396,15 +377,13 @@ function initMainScene(loadingScreen, isMobile) {
         threeContainer.appendChild(renderer.domElement);
 
         // Add post-processing only if not in simple rendering mode
-        let composer, renderPass, bloomPass;
-        
         if (!useSimpleRendering) {
             composer = new THREE.EffectComposer(renderer);
-            renderPass = new THREE.RenderPass(scene, camera);
+            const renderPass = new THREE.RenderPass(scene, camera);
             composer.addPass(renderPass);
             
             // Add bloom effect
-            bloomPass = new THREE.UnrealBloomPass(
+            const bloomPass = new THREE.UnrealBloomPass(
                 new THREE.Vector2(window.innerWidth, window.innerHeight),
                 0.6,    // strength
                 0.4,    // radius
@@ -414,17 +393,17 @@ function initMainScene(loadingScreen, isMobile) {
         }
         
         // Add multiple dynamic light sources with neutral colors
-        const pointLight1 = new THREE.PointLight(0xCCCCCC, 1, 100); // Light grey
+        pointLight1 = new THREE.PointLight(0xCCCCCC, 1, 100); // Light grey
         pointLight1.position.set(10, 10, 10);
         scene.add(pointLight1);
         
-        const pointLight2 = new THREE.PointLight(0xAAAAAA, 0.8, 100); // Medium grey
+        pointLight2 = new THREE.PointLight(0xAAAAAA, 0.8, 100); // Medium grey
         pointLight2.position.set(-10, -5, 10);
         scene.add(pointLight2);
         
         // Create fluid simulation mesh with neutral colors
         const fluidGeometry = new THREE.PlaneGeometry(40, 40, 256, 256);
-        const fluidMaterial = new THREE.ShaderMaterial({
+        fluidMaterial = new THREE.ShaderMaterial({
             vertexShader: `
                 uniform float uTime;
                 uniform float uNoiseStrength;
@@ -566,15 +545,15 @@ function initMainScene(loadingScreen, isMobile) {
             blending: THREE.AdditiveBlending
         });
         
-        const fluidMesh = new THREE.Mesh(fluidGeometry, fluidMaterial);
+        fluidMesh = new THREE.Mesh(fluidGeometry, fluidMaterial);
         fluidMesh.rotation.x = -Math.PI * 0.45;
         fluidMesh.position.set(0, -2, 0);
         scene.add(fluidMesh);
         
         // Create light trails system with neutral colors
         const trailsCount = 10;
-        const trailPointsCount = 100;
-        const trails = [];
+        trailPointsCount = 100;
+        trails = [];
         
         for (let i = 0; i < trailsCount; i++) {
             const trailGeometry = new THREE.BufferGeometry();
@@ -661,21 +640,8 @@ function initMainScene(loadingScreen, isMobile) {
             side: THREE.DoubleSide
         });
         
-        const morphMesh = new THREE.Mesh(morphGeometry, morphMaterial);
+        morphMesh = new THREE.Mesh(morphGeometry, morphMaterial);
         scene.add(morphMesh);
-        
-        // Create mouse tracking for interactive elements
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetMouseX = 0;
-        let targetMouseY = 0;
-        
-        // Add mouse movement tracking for cursor-based rotation
-        document.addEventListener('mousemove', (event) => {
-            // Calculate normalized mouse position (-1 to 1)
-            targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            targetMouseY = (event.clientY / window.innerHeight) * 2 - 1;
-        });
         
         // Add touch support for mobile devices
         document.addEventListener('touchmove', (event) => {
@@ -685,7 +651,7 @@ function initMainScene(loadingScreen, isMobile) {
                 targetMouseY = (event.touches[0].clientY / window.innerHeight) * 2 - 1;
                 
                 // Prevent default only if touching the three.js container
-                if (event.target === renderer.domElement) {
+                if (renderer && event.target === renderer.domElement) {
                     event.preventDefault();
                 }
             }

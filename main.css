@@ -374,7 +374,7 @@ body {
     background: rgba(30, 30, 30, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.415);
     transition: all 0.4s var(--transition);
     opacity: 0;
     transform: translateY(50px);
