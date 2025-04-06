@@ -9,9 +9,16 @@
     <meta property="og:title" content="Vinayak Kumar's Portfolio">
     <meta property="og:description" content="A showcase of professional work by Vinayak Kumar, specializing in Deep Learning.">
     <meta property="og:url" content="https://vins-z.github.io/">
-    <meta property="og:type" content="website">    <meta name="keywords" content="Vinayak Kumar, portfolio, iOS Developer, UI/UX Designer, Deep Learning">
-    <meta name="author" content="Vinayak Kumar">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://vins-z.github.io/profile.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vinayak Kumar's Portfolio">
+    <meta name="twitter:description" content="A showcase of professional work by Vinayak Kumar, specializing in Deep Learning.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#000000">
+    <link rel="canonical" href="https://vins-z.github.io/">
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="print.css" media="print">
     <title>Vinayak - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +37,30 @@
         gtag('js', new Date());
 
         gtag('config', 'GA_TRACKING_ID');
+    </script>
+    
+    <!-- Structured data for better SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Vinayak Kumar",
+      "url": "https://vins-z.github.io/",
+      "jobTitle": "Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": ""
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Vellore Institute of Technology (VIT)"
+      },
+      "knowsAbout": ["Deep Learning", "Machine Learning", "Computer Vision", "Python", "Java"],
+      "sameAs": [
+        "https://linkedin.com/in/vinayak-kumar-381622210",
+        "https://github.com/Vins-z"
+      ]
+    }
     </script>
 </head>
 <body>
@@ -58,12 +89,21 @@
     
     <section class="hero" id="home">
         <div class="hero-content">
-            <p><b>Innovation</b> is no accident.<p>
-            <p>It is hard work.</p>
+            <div class="hero-text-container">
+                <div class="typewriter-container">
+                    <h1 class="typed-text">Excellence isn't accidental.</h1>
+                </div>
+                <div class="tagline-container">
+                    <p class="tagline"><span class="accent-text">Dedication</span> builds it.</p>
+                    <p class="tagline"><span class="accent-text">Persistence</span> refines it.</p>
+                    <p class="tagline"><span class="accent-text">Hard work</span> defines it.</p>
+                </div>
+            </div>
+            <div class="cta-container">
             <a class="cta-btn" href="#projects" id="viewProjectsBtn">View Projects</a>
             <a href="https://drive.google.com/file/d/1CHqlrldYo2_UFgmxv64bSCe8sBF48cpb/view?usp=sharing" download target="_blank" class="cta-btn" id="resumeBtn" rel="noopener">Resume</a>
             <a href="https://github.com/Vins-z" target="_blank" class="cta-btn" rel="noopener" id="githubBtn">Visit GitHub</a>
-
+            </div>
         </div>
         <div id="cube-container" class="cube-container"></div>
     </section>
@@ -71,29 +111,86 @@
     <section id="skills" class="section skills">
         <h2>Expertise</h2>
         <div class="skill-list">
-            <div class="skill-item">Deep Learning</div>
-            <div class="skill-item">Git</div>
-            <div class="skill-item">Computer Vision</div>
-            <div class="skill-item">Business Analytics</div>
-            <div class="skill-item">HTML5</div>
-            <div class="skill-item">CSS3</div>
-            <div class="skill-item">JavaScript</div>
-            <div class="skill-item">Swift</div>
-            <div class="skill-item">Swift UI</div>
-            <div class="skill-item">Flutter</div>
-            <div class="skill-item">C</div>
-            <div class="skill-item">C++</div>
-            <div class="skill-item">Python (Advanced)</div>
-            <div class="skill-item">Java (Advanced)</div>
-            <div class="skill-item">Command Line</div>
-            <div class="skill-item">UI/UX Design</div>
-            <div class="skill-item">PyTorch</div>
-            <div class="skill-item">TensorFlow and Keras</div>
-            <div class="skill-item">Natural Language Processing</div>
-            <div class="skill-item">Power BI</div>
-            <div class="skill-item">Figma</div>
-            <div class="skill-item">Blender (3D Modelling)</div>
-            <div class="skill-item">Technical Analysis</div>
+            <div class="skill-item" data-description="Proficient in various neural network architectures including CNNs, RNNs, Transformers, and GANs. Experienced in building and deploying deep learning models for computer vision, NLP, and time series analysis.">
+                <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                <div class="skill-text">Deep Learning</div>
+            </div>
+            <div class="skill-item" data-description="Advanced proficiency in version control with Git. Experienced in collaborative workflows, branching strategies, and CI/CD integration.">
+                <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
+                <div class="skill-text">Git</div>
+            </div>
+            <div class="skill-item" data-description="Expertise in image processing, object detection, segmentation, and recognition systems using OpenCV, PyTorch, and TensorFlow.">
+                <div class="skill-icon"><i class="fas fa-eye"></i></div>
+                <div class="skill-text">Computer Vision</div>
+            </div>
+            <div class="skill-item" data-description="Skilled in data analysis, visualization, and business intelligence tools. Experience in extracting actionable insights from complex datasets using Python, R, and BI platforms.">
+                <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="skill-text">Business Analytics</div>
+            </div>
+            <div class="skill-item" data-description="Strong foundation in semantic HTML5 markup with accessibility best practices. Experience building responsive web applications with modern HTML features.">
+                <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                <div class="skill-text">HTML5</div>
+            </div>
+            <div class="skill-item" data-description="Advanced CSS skills including flexbox, grid, animations, and responsive design. Familiar with CSS preprocessors like SASS and CSS-in-JS solutions.">
+                <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                <div class="skill-text">CSS3</div>
+            </div>
+            <div class="skill-item" data-description="Proficient in modern JavaScript (ES6+), including asynchronous programming, DOM manipulation, and working with APIs. Experience with frameworks like React and Vue.js.">
+                <div class="skill-icon"><i class="fab fa-js"></i></div>
+                <div class="skill-text">JavaScript</div>
+            </div>
+            <div class="skill-item" data-description="Skilled in iOS app development using Swift, with knowledge of UIKit, Core Data, Core Animation, and network communications.">
+                <div class="skill-icon"><i class="fab fa-swift"></i></div>
+                <div class="skill-text">Swift</div>
+            </div>
+            <div class="skill-item" data-description="Cross-platform mobile app development using Flutter and Dart. Experience creating beautiful, natively compiled applications for mobile, web, and desktop.">
+                <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="skill-text">Flutter</div>
+            </div>
+            <div class="skill-item" data-description="Strong foundation in C programming with experience in memory management, data structures, and system-level programming.">
+                <div class="skill-icon"><i class="fas fa-code"></i></div>
+                <div class="skill-text">C</div>
+            </div>
+            <div class="skill-item" data-description="Proficient in object-oriented programming with C++. Experience in application development, algorithm implementation, and optimization.">
+                <div class="skill-icon"><i class="fas fa-file-code"></i></div>
+                <div class="skill-text">C++</div>
+            </div>
+            <div class="skill-item" data-description="Advanced Python skills for data science, machine learning, web development, and automation. Expertise in NumPy, Pandas, scikit-learn, and other major libraries.">
+                <div class="skill-icon"><i class="fab fa-python"></i></div>
+                <div class="skill-text">Python (Advanced)</div>
+            </div>
+            <div class="skill-item" data-description="Extensive experience with Java for enterprise applications, backend services, and Android development. Strong understanding of OOP principles and design patterns.">
+                <div class="skill-icon"><i class="fab fa-java"></i></div>
+                <div class="skill-text">Java (Advanced)</div>
+            </div>
+            <div class="skill-item" data-description="Proficient in Unix/Linux command line operations, shell scripting, and automation. Experienced in build processes, system administration, and deployment workflows.">
+                <div class="skill-icon"><i class="fas fa-terminal"></i></div>
+                <div class="skill-text">Command Line</div>
+            </div>
+            <div class="skill-item" data-description="Experience in creating user-centered designs with focus on usability, accessibility, and aesthetics. Skilled in wireframing, prototyping, and user testing.">
+                <div class="skill-icon"><i class="fas fa-pencil-ruler"></i></div>
+                <div class="skill-text">UI/UX Design</div>
+            </div>
+            <div class="skill-item" data-description="Deep expertise in PyTorch for building and training neural networks. Experience with custom architectures, data loaders, and deployment optimizations.">
+                <div class="skill-icon"><i class="fas fa-fire"></i></div>
+                <div class="skill-text">PyTorch</div>
+            </div>
+            <div class="skill-item" data-description="Proficient in building and deploying machine learning models with TensorFlow and Keras. Experience with model optimization, distributed training, and TF Serving.">
+                <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
+                <div class="skill-text">TensorFlow and Keras</div>
+            </div>
+            <div class="skill-item" data-description="Skilled in creating interactive dashboards and reports using Power BI. Experience with data modeling, DAX formulas, and visualization best practices.">
+                <div class="skill-icon"><i class="fas fa-chart-bar"></i></div>
+                <div class="skill-text">Power BI</div>
+            </div>
+            <div class="skill-item" data-description="Strong understanding of market analysis using technical indicators, chart patterns, and quantitative methods for financial markets.">
+                <div class="skill-icon"><i class="fas fa-chart-area"></i></div>
+                <div class="skill-text">Technical Analysis</div>
+            </div>
+            <div class="skill-item" data-description="Expertise in evaluating company financials, industry analysis, and economic indicators to determine intrinsic value and long-term growth potential of investments.">
+                <div class="skill-icon"><i class="fas fa-balance-scale"></i></div>
+                <div class="skill-text">Fundamental Analysis</div>
+            </div>
         </div>
     </section>
 
@@ -101,34 +198,39 @@
         <h2>Projects & Research</h2>
         <div class="project-list">
             
-            <div class="project-item" data-description="Implemented a convolutional neural network using PyTorch for automated diagnosis of chest X-rays.">
-                <h3>Deep Learning for Medical Imaging</h3>
-            </div>
             <div class="project-item" data-description="An advanced investment portfolio optimization platform crafted to empower financial decision-making. 
             Built with Python, the platform integrates real-time market data from multiple sources, including stock prices, economic indicators, and news sentiment analysis. 
             A sophisticated backtesting framework evaluates the performance of investment strategies on historical data, delivering a 19% improvement in risk-adjusted returns. 
-            By harnessing machine learning for predictive analytics, this system provides actionable insights, helping users make data-driven investment decisions with confidence.">
+            By harnessing machine learning for predictive analytics, this system provides actionable insights, helping users make data-driven investment decisions with confidence.
+            
+            GitHub: https://github.com/Vins-z/Fin-inv">
                 <h3>FinTech Investment Portfolio Optimizer</h3>
             </div>
             <div class="project-item" data-description="A robust full-stack application designed to optimize vehicle task allocation and streamline route management for fleet operators. 
             Leveraging Flask APIs, MongoDB, and Docker, the system achieves seamless task distribution, intelligent route optimization, and enhanced scalability. 
             Automated CI/CD pipelines with GitHub Actions further streamline the development lifecycle, significantly reducing deployment time by 70%. 
-            The system improved operational efficiency by 40%, showcasing its capability to handle dynamic fleet operations with precision and reliability.">
+            The system improved operational efficiency by 40%, showcasing its capability to handle dynamic fleet operations with precision and reliability.
+            
+            GitHub: https://github.com/Vins-z/Fleet-Management-System">
                 <h3>Fleet Management System</h3>
             </div>
             <div class="project-item" data-description="Designed CNN achieving 97% training accuracy with 3 convolutional layers and batch normalization
             Processed 70,000 images using data augmentation and normalization techniques
             Implemented real-time image processing with OpenCV for edge detection and contour finding
             Created interactive GUI for digit drawing and image upload with probability distribution display
-            Optimized for mobile deployment using TensorFlow Lite, reducing model size by 75%">
+            Optimized for mobile deployment using TensorFlow Lite, reducing model size by 75%
+            
+            GitHub: https://github.com/Vins-z/MNIST-Digit-Classifier">
                 <h3>MNIST Digit Classifier: Deep Learning Image Recognition</h3>
             </div>
             <div class="project-item" data-description="Research on leveraging Machine Learning to integrate ESG(Environmental, Social, and Governance) factors in credit risk management models.">
                 <h3>ESG in Credit Risk Management</h3>
             </div>
-            <div class="project-item" data-description="Description: A Machine Learning model that uses Artificial Neural Networks(ANNs) to train on a company’s past sales data and predict future sales.
+            <div class="project-item" data-description="Description: A Machine Learning model that uses Artificial Neural Networks(ANNs) to train on a company's past sales data and predict future sales.
             Also, it provides insights for improving future sales.
-            Programmed Using: Python, Tensorflow, Keras, numpy, PyQT5.">
+            Programmed Using: Python, Tensorflow, Keras, numpy, PyQT5.
+            
+            GitHub: https://github.com/Vins-z/M-fine">
                 <h3>M-fine: AI-Powered Sales Prediction Platform</h3>
             </div>
         </div>
@@ -137,12 +239,30 @@
     <section id="interests" class="section interests">
         <h2>Interests</h2>
         <div class="interest-list">
-            <div class="interest-item">Autonomous Machines and Automobiles</div>
-            <div class="interest-item">Sustainable Mobility Using Deep Learning</div>
-            <div class="interest-item">Cognitive Science and Psychology</div>
-            <div class="interest-item">Marketing and Consumer Behavior</div>
-            <div class="interest-item">Improve Scalability of Applications through Deep Learning in a fast-paced environment</div>
-            <div class="interest-item">Financial Technical and Fundamental Analysis</div>
+            <div class="interest-item" data-description="Passionate about the evolution of autonomous vehicles, robotics, and related AI systems. Following advancements in sensor fusion, path planning algorithms, and machine learning applications for self-driving technology. Interested in both the technical challenges and ethical implications of autonomous machines.">
+                <div class="interest-icon"><i class="fas fa-car"></i></div>
+                <div class="interest-text">Autonomous Machines and Automobiles</div>
+            </div>
+            <div class="interest-item" data-description="Exploring how deep learning can revolutionize transportation systems to reduce carbon footprints and increase efficiency. Interested in AI applications for optimizing energy use in electric vehicles, improving public transport networks, and creating intelligent traffic management systems.">
+                <div class="interest-icon"><i class="fas fa-leaf"></i></div>
+                <div class="interest-text">Sustainable Mobility Using Deep Learning</div>
+            </div>
+            <div class="interest-item" data-description="Fascinated by the intersection of cognitive science, psychology, and artificial intelligence. Exploring how human cognition can inform better AI systems, and how insights from neuroscience can lead to more effective machine learning architectures. Interested in consciousness, perception, and decision-making processes.">
+                <div class="interest-icon"><i class="fas fa-brain"></i></div>
+                <div class="interest-text">Cognitive Science and Psychology</div>
+            </div>
+            <div class="interest-item" data-description="Interested in behavioral economics and how data science can reveal patterns in consumer preferences and decisions. Studying the application of machine learning for customer segmentation, recommendation systems, and predictive analytics in marketing contexts.">
+                <div class="interest-icon"><i class="fas fa-shopping-cart"></i></div>
+                <div class="interest-text">Marketing and Consumer Behavior</div>
+            </div>
+            <div class="interest-item" data-description="Researching techniques to implement deep learning for system optimization and scaling. Focusing on neural network compression, distributed training methodologies, and cloud-based deployment strategies that enable AI systems to grow efficiently with increasing demands and data volumes.">
+                <div class="interest-icon"><i class="fas fa-server"></i></div>
+                <div class="interest-text">Improve Scalability of Applications through Deep Learning in a fast-paced environment</div>
+            </div>
+            <div class="interest-item" data-description="Studying both traditional financial analysis methods and modern quantitative approaches. Interested in algorithmic trading strategies, market microstructure, and the application of machine learning for financial forecasting and risk management.">
+                <div class="interest-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="interest-text">Financial Technical and Fundamental Analysis</div>
+            </div>
         </div>
     </section>
 
@@ -163,6 +283,12 @@
             <div class="education-item" data-description="Mastered complex financial modeling and automated reporting systems.">
                 <h3>Advanced Excel Certification | Goldman Sachs | Forage </h3>
             </div>
+            <div class="education-item" data-description="• Wrote a proposal for a RESTful web service to manage a list of employees.
+            • Built a web server application in Java Spring Boot that can accept and respond to HTTP requests as well as
+            support uploading JSON data.
+            • Developed and ran unit tests to assess my Java Spring Boot application's performance.">
+                <h3>Software Engineering | Hewlett Packard Enterprise | Forage</h3>
+            </div>
             <div class="education-item" data-description="Completed coursework on foundational and advanced deep learning concepts. Developed a music generation system using TensorFlow and a debiased facial recognition system.">
                 <h3>MIT Introduction to Deep Learning (6.S191)	</h3>
             </div>
@@ -174,9 +300,9 @@
     <section id="contact" class="section contact">
         <h2>Get In Touch</h2>
         <form action="https://formbold.com/s/oe5PR" method="POST">
-            <input type="email" placeholder="Email" name="email" aria-label="Email">
-            <input type="text" placeholder="Subject" name="subject" aria-label="Subject">
-            <textarea name="message" placeholder="Type your message" aria-label="Message"></textarea>
+            <input type="email" placeholder="Email" name="email" aria-label="Email" required>
+            <input type="text" placeholder="Subject" name="subject" aria-label="Subject" required>
+            <textarea name="message" placeholder="Type your message" aria-label="Message" required></textarea>
             <button class="Submit-button" type="submit">Send Message</button>
         </form>
     </section>
@@ -189,6 +315,11 @@
         <p>&copy; 2025 Vinayak Kumar. All rights reserved.</p>
     </footer>
 
+    <!-- Back to Top button -->
+    <a href="#home" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
     <!-- Modal Structure -->
     <div id="projectModal" class="modal">
         <div class="modal-content">
@@ -198,7 +329,29 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Three.js libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <!-- Post-processing libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <!-- Main script -->
     <script src="main.js"></script>
+    <script>
+        // Inside initMainScene()
+        try {
+            // Create scene, camera, etc.
+        } catch (error) {
+            console.error("Three.js initialization error:", error);
+            // Make sure loading screen is hidden even if 3D fails
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

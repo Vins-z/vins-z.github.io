@@ -1,0 +1,136 @@
+/* Print Stylesheet for Portfolio Website */
+
+/* Hide elements not needed for print */
+.cube-container, 
+.navbar, 
+.menu-btn, 
+.menu-overlay, 
+footer, 
+.modal, 
+.back-to-top,
+#loading-screen {
+    display: none !important;
+}
+
+/* Basic page setup */
+@page {
+    margin: 1.5cm;
+}
+
+body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+}
+
+/* Layout adjustments */
+.section {
+    padding: 1cm 0 !important;
+    background: white !important;
+    page-break-inside: avoid;
+    margin-bottom: 1cm;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: black !important;
+    page-break-after: avoid;
+}
+
+h1 {
+    font-size: 18pt;
+}
+
+h2 {
+    font-size: 16pt;
+    margin-bottom: 0.5cm !important;
+}
+
+h3 {
+    font-size: 14pt;
+}
+
+p, li {
+    font-size: 12pt;
+}
+
+a {
+    text-decoration: none;
+    color: black !important;
+}
+
+/* Remove special effects */
+.skill-item, 
+.project-item, 
+.interest-item, 
+.education-item,
+.attribute {
+    background: white !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    break-inside: avoid;
+    color: black !important;
+    page-break-inside: avoid;
+    transform: none !important;
+}
+
+.skill-icon, 
+.interest-icon,
+.attribute-icon {
+    color: #333 !important;
+    text-shadow: none !important;
+}
+
+/* Grid adjustments */
+.skill-list,
+.project-list,
+.interest-list,
+.education-list,
+.key-attributes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5cm;
+}
+
+/* Hero section adjustments */
+.hero {
+    height: auto !important;
+    min-height: auto !important;
+}
+
+.hero-content {
+    opacity: 1 !important;
+}
+
+/* About section adjustments */
+.about-content {
+    display: block;
+}
+
+.about-text {
+    margin-bottom: 1cm;
+}
+
+/* Links - show URLs for important links */
+a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    font-style: italic;
+}
+
+/* Ensure good spacing */
+.section:not(:last-child) {
+    margin-bottom: 1cm;
+}
+
+/* Add visual page breaks where needed */
+#skills, #projects, #interests, #education, #contact {
+    page-break-before: always;
+}
+
+/* Remove animations and transitions */
+* {
+    animation: none !important;
+    transition: none !important;
+} 
