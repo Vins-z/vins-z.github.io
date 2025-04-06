@@ -3,6 +3,7 @@ let touchStart;
 let touchEnd;
 let backgroundScene, backgroundCamera, backgroundRenderer, backgroundComposer;
 let isMobile = false;
+let globalThreeContainer; // Add global reference to the Three.js container
 
 // Check if device is mobile
 function checkMobile() {
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cubeContainer = document.getElementById('cube-container');
     if (cubeContainer) {
         cubeContainer.style.opacity = isMobile ? '0.4' : '1'; // Lower opacity on mobile
+        globalThreeContainer = cubeContainer; // Store global reference
     }
     
     // Hide loading screen after content loads
@@ -349,6 +351,7 @@ function initMainScene(loadingScreen, isMobile) {
     try {
         // Get the three.js container element
         const threeContainer = document.getElementById('cube-container');
+        globalThreeContainer = threeContainer; // Store global reference
         
         if (!threeContainer) {
             // If container is missing, log error and exit 3D setup
@@ -742,9 +745,6 @@ function initMainScene(loadingScreen, isMobile) {
             const scrollProgress = Math.max(0, Math.min(scrollY / maxScrollForZoom, 1)); // Ensure progress is between 0 and 1
             targetZoom = 40 - (40 - maxZoom) * scrollProgress;
             
-            // --- 3D Scene Opacity (Keep visible) --- 
-            threeContainer.style.opacity = '1'; // Keep it visible (using renamed variable)
-
             // --- Scroll Speed Calculation for 3D --- 
             scrollSpeed_3D = Math.abs(scrollY - lastScrollY_3D);
             lastScrollY_3D = scrollY;
@@ -907,9 +907,10 @@ function initMainScene(loadingScreen, isMobile) {
             }, 500); // Match fade duration
         }
         
-        // Hide the 3D container as it likely didn't initialize correctly
+        // Don't hide the Three.js container on error, just show an empty container
         if (threeContainer) {
-            threeContainer.style.display = 'none'; 
+            // threeContainer.style.display = 'none'; // Remove this line
+            threeContainer.innerHTML = ''; // Clear the container instead of hiding it
         }
     } 
 }

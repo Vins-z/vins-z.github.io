@@ -308,15 +308,14 @@ body {
 }
 
 .cube-container {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    opacity: 0;
-    animation: fadeIn 1.5s var(--transition) forwards;
-    animation-delay: 1s;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.6; /* Set default opacity for desktop */
     transition: opacity 0.5s ease;
 }
 
@@ -325,7 +324,7 @@ body {
     padding: 6rem 2rem;
     position: relative;
     overflow: hidden;
-    background-color: var(--bg);
+    
 }
 
 .section h2 {
@@ -598,7 +597,7 @@ footer {
 }
 
 .fade-in {
-    animation: fadeIn 0.8s var(--transition) forwards;
+    animation: fadeIn 0.5s var(--transition) forwards;
 }
 
 /* Modal */
@@ -785,6 +784,10 @@ footer {
     .contact form {
         width: 100%;
     }
+    
+    .cube-container {
+        opacity: 0.25; /* Lower opacity on mobile for better text readability */
+    }
 }
 
 /* Smaller mobile devices */
@@ -877,23 +880,6 @@ footer {
     }
 }
 
-/* Fix for three.js canvas on mobile */
-#cube-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-}
-
-@media (max-width: 768px) {
-    #cube-container {
-        opacity: 0.4; /* Reduce opacity on mobile for better text readability */
-    }
-}
-
 /* Dark mode - for future implementation */
 @media (prefers-color-scheme: dark) {
     :root {
@@ -948,7 +934,7 @@ footer {
 .visible {
     opacity: 1;
     transform: translateY(0);
-    transition: all 0.8s var(--transition);
+    transition: all 0.5s var(--transition);
 }
 
 /* Ensure proper spacing between sections after removal */
