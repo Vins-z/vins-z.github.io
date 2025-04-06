@@ -2,8 +2,17 @@
 let touchStart;
 let touchEnd;
 let backgroundScene, backgroundCamera, backgroundRenderer, backgroundComposer;
+let isMobile = false;
+
+// Check if device is mobile
+function checkMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Set mobile flag
+    isMobile = checkMobile();
+    
     // Create loading screen
     const loadingScreen = document.getElementById('loading-screen');
     loadingScreen.style.cssText = `
@@ -46,13 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set up black background for non-home sections
     document.body.style.backgroundColor = '#000000';
     
-    // Initialize home screen effect, passing the loading screen element
-    initMainScene(loadingScreen);
+    // Initialize home screen effect, passing the loading screen element and mobile flag
+    initMainScene(loadingScreen, isMobile);
     
     // Get cube container and set initial opacity for smooth transitions
     const cubeContainer = document.getElementById('cube-container');
     if (cubeContainer) {
-        cubeContainer.style.opacity = '1';
+        cubeContainer.style.opacity = isMobile ? '0.4' : '1'; // Lower opacity on mobile
     }
     
     // Hide loading screen after content loads
@@ -260,34 +269,87 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollSpeed = Math.abs(scrollY - lastScrollY);
         lastScrollY = scrollY;
     });
+
+    // Adjust 3D effect intensity for mobile
+    if (isMobile) {
+        // Reduce animation complexity for mobile devices
+        const animatedElements = document.querySelectorAll('.skill-item, .project-item, .interest-item, .education-item');
+        animatedElements.forEach(el => {
+            el.style.transform = 'none';
+            el.style.transition = 'opacity 0.5s ease';
+        });
+    }
+
+    // Make touch events more responsive on mobile
+    if (isMobile) {
+        document.addEventListener('touchstart', function(e) {
+            touchStart = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', function(e) {
+            touchEnd = e.touches[0].clientY;
+        }, { passive: true });
+    }
+    
+    // Responsive modal for mobile
+    if (isMobile) {
+        const modalContent = document.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.style.width = '95%';
+            modalContent.style.maxHeight = '80vh';
+        }
+    }
+
+    // Create mouse tracking for interactive elements
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetMouseX = 0;
+    let targetMouseY = 0;
+    
+    // Add mouse movement tracking for cursor-based rotation
+    document.addEventListener('mousemove', (event) => {
+        // Calculate normalized mouse position (-1 to 1)
+        targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
+        targetMouseY = (event.clientY / window.innerHeight) * 2 - 1;
+    });
+    
+    // Add touch support for mobile devices
+    document.addEventListener('touchmove', (event) => {
+        if (event.touches.length > 0) {
+            // Calculate normalized touch position (-1 to 1)
+            targetMouseX = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = (event.touches[0].clientY / window.innerHeight) * 2 - 1;
+            
+            // Prevent default only if touching the three.js container
+            if (event.target === renderer.domElement) {
+                event.preventDefault();
+            }
+        }
+    }, { passive: false });
+    
+    // Handle window resize events
+    window.addEventListener('resize', () => {
+        // Update camera
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        
+        // Update renderer and composer
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, useSimpleRendering ? 1.5 : 4));
+        
+        // Update composer if it exists
+        if (composer) {
+            composer.setSize(window.innerWidth, window.innerHeight);
+        }
+    });
 });
 
 // Advanced Three.js Implementation
-function initMainScene(loadingScreen) {
-    // Get frequently accessed DOM elements once
-    const threeContainer = document.getElementById('cube-container');
-
-    // --- Mobile Optimization: Skip 3D on small screens --- 
-    // Reverted: Removed screen width check to allow animation on all devices
-    // if (window.innerWidth < 768) {
-    //     console.log("Small screen detected, skipping Three.js initialization for performance.");
-    //     // Ensure loading screen is hidden even if 3D is skipped
-    //     if (loadingScreen) {
-    //         loadingScreen.style.opacity = '0'; 
-    //         setTimeout(() => {
-    //             if (loadingScreen) loadingScreen.style.display = 'none';
-    //             document.body.style.overflow = ''; // Ensure scrollbar is back
-    //         }, 500);
-    //     }
-    //     // Hide the container if it exists
-    //     if (threeContainer) {
-    //         threeContainer.style.display = 'none';
-    //     }
-    //     return; // Exit the function, skipping 3D setup
-    // }
-    // --- End Mobile Optimization ---
-
-    try { // Start of try block
+function initMainScene(loadingScreen, isMobile) {
+    try {
+        // Get the three.js container element
+        const threeContainer = document.getElementById('cube-container');
+        
         if (!threeContainer) {
             // If container is missing, log error and exit 3D setup
             console.error("Three.js container (#cube-container) not found!");
@@ -295,6 +357,9 @@ function initMainScene(loadingScreen) {
             throw new Error("Missing 3D container"); // Throw to trigger catch block
         }
 
+        // Create a simpler renderer for mobile
+        const useSimpleRendering = isMobile;
+        
         // Main scene setup
         const scene = new THREE.Scene();
         
@@ -316,120 +381,45 @@ function initMainScene(loadingScreen) {
         
         // Set up renderer with anti-aliasing and high pixel ratio
         const renderer = new THREE.WebGLRenderer({ 
-            antialias: true,
+            antialias: !useSimpleRendering, // Disable anti-aliasing on mobile
             alpha: true,
             powerPreference: "high-performance"
         });
         renderer.setSize(window.innerWidth, window.innerHeight);
         // Further increase resolution by setting a higher pixel ratio, but capped to prevent performance issues
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 4));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, useSimpleRendering ? 1.5 : 4));
         renderer.setClearColor(0x000000, 0);
         renderer.outputEncoding = THREE.sRGBEncoding;
         threeContainer.appendChild(renderer.domElement);
 
-        // Add post-processing
-        const composer = new THREE.EffectComposer(renderer);
-        const renderPass = new THREE.RenderPass(scene, camera);
-        composer.addPass(renderPass);
+        // Add post-processing only if not in simple rendering mode
+        let composer, renderPass, bloomPass;
         
-        // Add bloom effect
-        const bloomPass = new THREE.UnrealBloomPass(
-            new THREE.Vector2(window.innerWidth, window.innerHeight),
-            0.6,    // strength
-            0.4,    // radius
-            0.85    // threshold
-        );
-        composer.addPass(bloomPass);
-        
-        // Create geometry for particles
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 3000;
-        
-        const posArray = new Float32Array(particlesCount * 3);
-        const scaleArray = new Float32Array(particlesCount);
-        const colorArray = new Float32Array(particlesCount * 3);
-        
-        // Fill the arrays with random positions
-        for(let i = 0; i < particlesCount * 3; i+=3) {
-            // Position
-            posArray[i] = (Math.random() - 0.5) * 50;
-            posArray[i+1] = (Math.random() - 0.5) * 50;
-            posArray[i+2] = (Math.random() - 0.5) * 50;
+        if (!useSimpleRendering) {
+            composer = new THREE.EffectComposer(renderer);
+            renderPass = new THREE.RenderPass(scene, camera);
+            composer.addPass(renderPass);
             
-            // Scale (for size variation)
-            scaleArray[i/3] = Math.random();
-            
-            // Color variation
-            colorArray[i] = 0.3 + Math.random() * 0.7; // R
-            colorArray[i+1] = 0.3 + Math.random() * 0.7; // G
-            colorArray[i+2] = 0.5 + Math.random() * 0.5; // B - more blue tint
+            // Add bloom effect
+            bloomPass = new THREE.UnrealBloomPass(
+                new THREE.Vector2(window.innerWidth, window.innerHeight),
+                0.6,    // strength
+                0.4,    // radius
+                0.85    // threshold
+            );
+            composer.addPass(bloomPass);
         }
         
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        particlesGeometry.setAttribute('scale', new THREE.BufferAttribute(scaleArray, 1));
-        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
-        
-        // Create material for particles with advanced shaders
-        const particlesMaterial = new THREE.ShaderMaterial({
-            vertexShader: `
-                attribute float scale;
-                attribute vec3 color;
-                
-                varying vec3 vPosition;
-                varying float vScale;
-                varying vec3 vColor;
-                
-                void main() {
-                    vPosition = position;
-                    vScale = scale;
-                    vColor = color;
-                    
-                    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                    gl_PointSize = scale * 2.5 * (300.0 / -mvPosition.z);
-                    gl_Position = projectionMatrix * mvPosition;
-                }
-            `,
-            fragmentShader: `
-                varying vec3 vPosition;
-                varying float vScale;
-                varying vec3 vColor;
-                
-                void main() {
-                    // Create a soft circular particle with gradient
-                    float distToCenter = length(gl_PointCoord - vec2(0.5));
-                    float strength = 1.0 - smoothstep(0.0, 0.5, distToCenter);
-                    
-                    // Add color variation based on position, scale, and provided color
-                    vec3 color = vColor * mix(
-                        vec3(0.3, 0.4, 0.9),
-                        vec3(0.9, 0.4, 0.6),
-                        vScale
-                    );
-                    
-                    // Apply the color with opacity based on strength
-                    gl_FragColor = vec4(color, strength * 0.8);
-                }
-            `,
-            transparent: true,
-            depthWrite: false,
-            blending: THREE.AdditiveBlending,
-            vertexColors: true
-        });
-        
-        // Create the particles system
-        const particlesSystem = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesSystem);
-        
-        // Add multiple dynamic light sources
-        const pointLight1 = new THREE.PointLight(0x4488ff, 1, 100);
+        // Add multiple dynamic light sources with neutral colors
+        const pointLight1 = new THREE.PointLight(0xCCCCCC, 1, 100); // Light grey
         pointLight1.position.set(10, 10, 10);
         scene.add(pointLight1);
         
-        const pointLight2 = new THREE.PointLight(0xff4488, 0.8, 100);
+        const pointLight2 = new THREE.PointLight(0xAAAAAA, 0.8, 100); // Medium grey
         pointLight2.position.set(-10, -5, 10);
         scene.add(pointLight2);
         
-        // Create fluid simulation mesh
+        // Create fluid simulation mesh with neutral colors
         const fluidGeometry = new THREE.PlaneGeometry(40, 40, 256, 256);
         const fluidMaterial = new THREE.ShaderMaterial({
             vertexShader: `
@@ -440,8 +430,9 @@ function initMainScene(loadingScreen) {
                 varying vec2 vUv;
                 varying float vElevation;
                 
-                // Simplex 3D noise function
-                vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+                // Simplex noise function
+                vec4 permute(vec4 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+                vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
                 
                 float snoise(vec3 v) {
                     const vec2 C = vec2(1.0/6.0, 1.0/3.0);
@@ -457,19 +448,21 @@ function initMainScene(loadingScreen) {
                     vec3 i1 = min(g.xyz, l.zxy);
                     vec3 i2 = max(g.xyz, l.zxy);
                     
-                    vec3 x1 = x0 - i1 + 1.0 * C.xxx;
-                    vec3 x2 = x0 - i2 + 2.0 * C.xxx;
-                    vec3 x3 = x0 - 1.0 + 3.0 * C.xxx;
+                    vec3 x1 = x0 - i1 + C.xxx;
+                    vec3 x2 = x0 - i2 + C.yyy;
+                    vec3 x3 = x0 - 1.0 + vec3(C.x + C.y, C.x + C.y, C.x + C.y);
                     
                     // Permutations
                     i = mod(i, 289.0);
                     vec4 p = permute(permute(permute(
-                                i.z + vec3(0.0, i1.z, i2.z)) +
-                                i.y + vec3(0.0, i1.y, i2.y)) +
-                                i.x + vec3(0.0, i1.x, i2.x));
-                    
+                              vec4(i.z, i1.z, i2.z, 1.0)) +
+                              vec4(i.y, i1.y, i2.y, 1.0)) +
+                              vec4(i.x, i1.x, i2.x, 1.0));
+                              
                     // Gradients
-                    vec3 ns = 0.142857142857 * D.wyz - D.xzx;
+                    float n_ = 1.0/7.0; // N=7
+                    vec3 ns = n_ * D.wyz - D.xzx;
+                    
                     vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
                     
                     vec4 x_ = floor(j * ns.z);
@@ -494,18 +487,17 @@ function initMainScene(loadingScreen) {
                     vec3 p2 = vec3(a1.xy, h.z);
                     vec3 p3 = vec3(a1.zw, h.w);
                     
-                    // Normalise gradients
-                    vec4 norm = 1.79284291400159 - 0.85373472095314 * vec4(
-                        dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
+                    // Normalize gradients
+                    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
                     p0 *= norm.x;
                     p1 *= norm.y;
                     p2 *= norm.z;
                     p3 *= norm.w;
                     
                     // Mix final noise value
-                    vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
+                    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
                     m = m * m;
-                    return 42.0 * dot(m*m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
+                    return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
                 }
                 
                 void main() {
@@ -562,8 +554,8 @@ function initMainScene(loadingScreen) {
                 uTime: { value: 0 },
                 uNoiseStrength: { value: 0.6 },
                 uWaveHeight: { value: 0.3 },
-                uBaseColor: { value: new THREE.Color(0x1a237e) }, // Deep blue
-                uHighlightColor: { value: new THREE.Color(0x7c4dff) } // Purple
+                uBaseColor: { value: new THREE.Color(0x444444) }, // Dark grey
+                uHighlightColor: { value: new THREE.Color(0x888888) } // Medium grey
             },
             transparent: true,
             side: THREE.DoubleSide,
@@ -576,7 +568,7 @@ function initMainScene(loadingScreen) {
         fluidMesh.position.set(0, -2, 0);
         scene.add(fluidMesh);
         
-        // Create light trails system
+        // Create light trails system with neutral colors
         const trailsCount = 10;
         const trailPointsCount = 100;
         const trails = [];
@@ -623,10 +615,10 @@ function initMainScene(loadingScreen) {
                         float strength = 1.0 - length(gl_PointCoord - vec2(0.5)) * 2.0;
                         strength = max(0.0, strength);
                         
-                        // Create rainbow-like color gradient
+                        // Create neutral color gradient
                         vec3 color = mix(
-                            vec3(0.8, 0.2, 0.8), // Purple
-                            vec3(0.2, 0.4, 0.9), // Blue
+                            vec3(0.5, 0.5, 0.5), // Medium grey
+                            vec3(0.8, 0.8, 0.8), // Light grey
                             vOpacity
                         );
                         
@@ -654,10 +646,10 @@ function initMainScene(loadingScreen) {
             });
         }
         
-        // Create abstracted morphing mesh (inspired by lusion.co)
+        // Create abstracted morphing mesh with neutral color
         const morphGeometry = new THREE.IcosahedronGeometry(5, 5);
         const morphMaterial = new THREE.MeshPhysicalMaterial({
-            color: 0xffffff,
+            color: 0xCCCCCC, // Light grey
             roughness: 0.2,
             metalness: 0.7,
             wireframe: true,
@@ -675,8 +667,26 @@ function initMainScene(loadingScreen) {
         let targetMouseX = 0;
         let targetMouseY = 0;
         
-        // We're removing all mouse and touch event listeners since we don't need cursor-based movement
-        // However, we'll keep the variables for future reference
+        // Add mouse movement tracking for cursor-based rotation
+        document.addEventListener('mousemove', (event) => {
+            // Calculate normalized mouse position (-1 to 1)
+            targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = (event.clientY / window.innerHeight) * 2 - 1;
+        });
+        
+        // Add touch support for mobile devices
+        document.addEventListener('touchmove', (event) => {
+            if (event.touches.length > 0) {
+                // Calculate normalized touch position (-1 to 1)
+                targetMouseX = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+                targetMouseY = (event.touches[0].clientY / window.innerHeight) * 2 - 1;
+                
+                // Prevent default only if touching the three.js container
+                if (event.target === renderer.domElement) {
+                    event.preventDefault();
+                }
+            }
+        }, { passive: false });
         
         // Handle window resize events
         window.addEventListener('resize', () => {
@@ -686,9 +696,12 @@ function initMainScene(loadingScreen) {
             
             // Update renderer and composer
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 4));
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, useSimpleRendering ? 1.5 : 4));
             
-            composer.setSize(window.innerWidth, window.innerHeight);
+            // Update composer if it exists
+            if (composer) {
+                composer.setSize(window.innerWidth, window.innerHeight);
+            }
         });
         
         // Scroll related variables for 3D scene
@@ -791,6 +804,15 @@ function initMainScene(loadingScreen) {
             // Update fluid shader uniforms
             fluidMaterial.uniforms.uTime.value = elapsedTime;
             
+            // Smooth mouse movement for better user experience
+            mouseX += (targetMouseX - mouseX) * 0.05;
+            mouseY += (targetMouseY - mouseY) * 0.05;
+            
+            // Apply cursor-based rotation to fluid mesh
+            fluidMesh.rotation.x = -Math.PI * 0.45 + mouseY * 0.1; // Tilt based on vertical mouse position
+            fluidMesh.rotation.y = mouseX * 0.1; // Rotate based on horizontal mouse position
+            fluidMesh.rotation.z = mouseX * mouseY * 0.01; // Add slight twist based on diagonal movement
+            
             // Animate light sources for dynamic lighting
             pointLight1.position.x = Math.sin(elapsedTime * 0.5) * 15;
             pointLight1.position.y = Math.cos(elapsedTime * 0.3) * 15;
@@ -798,16 +820,19 @@ function initMainScene(loadingScreen) {
             pointLight2.position.x = Math.sin(elapsedTime * 0.4 + Math.PI) * 15;
             pointLight2.position.y = Math.cos(elapsedTime * 0.2 + Math.PI) * 15;
             
-            // Update color cycling for lights based on time
-            const lightHue1 = (elapsedTime * 0.05) % 1;
-            const lightHue2 = ((elapsedTime * 0.05) + 0.5) % 1;
+            // Update with neutral color variations
+            const intensity1 = 0.5 + 0.3 * Math.sin(elapsedTime * 0.05);
+            const intensity2 = 0.5 + 0.3 * Math.sin((elapsedTime * 0.05) + Math.PI);
             
-            pointLight1.color.setHSL(lightHue1, 0.7, 0.6);
-            pointLight2.color.setHSL(lightHue2, 0.7, 0.6);
+            pointLight1.color.setRGB(intensity1, intensity1, intensity1);
+            pointLight2.color.setRGB(intensity2, intensity2, intensity2);
             
-            // Update fluid mesh colors
-            fluidMaterial.uniforms.uBaseColor.value.setHSL(lightHue1, 0.7, 0.3);
-            fluidMaterial.uniforms.uHighlightColor.value.setHSL(lightHue2, 0.8, 0.6);
+            // Update fluid mesh colors with neutral tones
+            const baseIntensity = 0.2 + 0.2 * Math.sin(elapsedTime * 0.05);
+            const highlightIntensity = 0.5 + 0.3 * Math.sin((elapsedTime * 0.05) + Math.PI);
+            
+            fluidMaterial.uniforms.uBaseColor.value.setRGB(baseIntensity, baseIntensity, baseIntensity);
+            fluidMaterial.uniforms.uHighlightColor.value.setRGB(highlightIntensity, highlightIntensity, highlightIntensity);
             
             // Update light trails
             trails.forEach(trail => {
@@ -835,23 +860,6 @@ function initMainScene(loadingScreen) {
                 trail.mesh.geometry.attributes.opacity.needsUpdate = true;
             });
             
-            // Remove cursor-based rotation for particles
-            particlesSystem.rotation.x = Math.sin(elapsedTime * 0.2) * 0.1;
-            particlesSystem.rotation.y = Math.cos(elapsedTime * 0.3) * 0.1;
-            particlesSystem.rotation.z += 0.001;
-            
-            // Move particles based on audio/scroll
-            for (let i = 0; i < particlesCount; i++) {
-                const i3 = i * 3;
-                const xPos = particlesGeometry.attributes.position.array[i3];
-                const yPos = particlesGeometry.attributes.position.array[i3 + 1];
-                const zPos = particlesGeometry.attributes.position.array[i3 + 2];
-                
-                // Apply wave motion
-                particlesGeometry.attributes.position.array[i3 + 1] = yPos + Math.sin(elapsedTime + xPos) * 0.01;
-            }
-            particlesGeometry.attributes.position.needsUpdate = true;
-            
             // Update morph mesh
             morphMesh.rotation.x = elapsedTime * 0.1;
             morphMesh.rotation.y = elapsedTime * 0.15;
@@ -876,8 +884,12 @@ function initMainScene(loadingScreen) {
             }
             morphMesh.geometry.attributes.position.needsUpdate = true;
             
-            // Update post-processing effects
-            composer.render();
+            // Update post-processing effects or use simple rendering
+            if (useSimpleRendering) {
+                renderer.render(scene, camera);
+            } else {
+                composer.render();
+            }
         }
         
         animate();

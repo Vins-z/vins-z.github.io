@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Explore the portfolio of Vinayak Kumar, an Engineer specializing in Deep Learning. Discover innovative AI projects and my contributions to the field.">
     <meta name="keywords" content="portfolio, Vinayak Kumar, Engineer, Deep Learning, AI, Machine Learning, projects">
     <meta name="author" content="Vinayak Kumar">
@@ -100,9 +100,9 @@
                 </div>
             </div>
             <div class="cta-container">
-            <a class="cta-btn" href="#projects" id="viewProjectsBtn">View Projects</a>
-            <a href="https://drive.google.com/file/d/1CHqlrldYo2_UFgmxv64bSCe8sBF48cpb/view?usp=sharing" download target="_blank" class="cta-btn" id="resumeBtn" rel="noopener">Resume</a>
-            <a href="https://github.com/Vins-z" target="_blank" class="cta-btn" rel="noopener" id="githubBtn">Visit GitHub</a>
+                <a class="cta-btn" href="#projects" id="viewProjectsBtn">View Projects</a>
+                <a href="https://drive.google.com/file/d/1CHqlrldYo2_UFgmxv64bSCe8sBF48cpb/view?usp=sharing" download target="_blank" class="cta-btn" id="resumeBtn" rel="noopener">Resume</a>
+                <a href="https://github.com/Vins-z" target="_blank" class="cta-btn" rel="noopener" id="githubBtn">Visit GitHub</a>
             </div>
         </div>
         <div id="cube-container" class="cube-container"></div>
@@ -352,6 +352,35 @@
                 loadingScreen.style.display = 'none';
             }
         }
+    </script>
+
+    <!-- Script to improve mobile responsiveness -->
+    <script>
+        // Additional script to fix specific mobile issues
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial scale for mobile devices
+            function checkMobile() {
+                if (window.innerWidth <= 768) {
+                    // Ensure elements are properly sized on mobile
+                    const sections = document.querySelectorAll('.section');
+                    sections.forEach(section => {
+                        section.style.minHeight = 'auto';
+                    });
+                    
+                    // Fix any touch issues on mobile devices
+                    document.addEventListener('touchmove', function(e) {
+                        if (e.target.closest('.modal-content') || e.target.closest('form')) {
+                            // Allow scrolling on these elements
+                        } else {
+                            // Prevent unwanted scrolling on other elements if needed
+                        }
+                    }, { passive: true });
+                }
+            }
+            
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
+        });
     </script>
 </body>
 </html>
