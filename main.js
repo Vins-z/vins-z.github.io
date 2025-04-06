@@ -267,6 +267,26 @@ function initMainScene(loadingScreen) {
     // Get frequently accessed DOM elements once
     const threeContainer = document.getElementById('cube-container');
 
+    // --- Mobile Optimization: Skip 3D on small screens --- 
+    // Reverted: Removed screen width check to allow animation on all devices
+    // if (window.innerWidth < 768) {
+    //     console.log("Small screen detected, skipping Three.js initialization for performance.");
+    //     // Ensure loading screen is hidden even if 3D is skipped
+    //     if (loadingScreen) {
+    //         loadingScreen.style.opacity = '0'; 
+    //         setTimeout(() => {
+    //             if (loadingScreen) loadingScreen.style.display = 'none';
+    //             document.body.style.overflow = ''; // Ensure scrollbar is back
+    //         }, 500);
+    //     }
+    //     // Hide the container if it exists
+    //     if (threeContainer) {
+    //         threeContainer.style.display = 'none';
+    //     }
+    //     return; // Exit the function, skipping 3D setup
+    // }
+    // --- End Mobile Optimization ---
+
     try { // Start of try block
         if (!threeContainer) {
             // If container is missing, log error and exit 3D setup
