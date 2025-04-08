@@ -60,7 +60,7 @@ body {
     width: 100%;
     padding: 1.5rem 2rem;
     z-index: 103;
-    mix-blend-mode: difference;
+    background-color: var(--bg);
     font-size: 1.2rem;
     transition: padding 0.8s var(--transition);
 }
@@ -68,6 +68,7 @@ body {
 .navbar.scrolled {
     padding: 1rem 2rem;
     z-index: 103;
+    background-color: #000000;
 }
 
 .navbar-content {
@@ -542,6 +543,7 @@ body {
 
 /* Footer */
 footer {
+    
     background: #1a1a1a;
     color: white;
     padding: 4rem 2rem;
@@ -951,4 +953,43 @@ footer {
         animation: none !important;
         transition: none !important;
     }
+}
+
+/* Back to Top button */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s var(--transition);
+    z-index: 99;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background-color: #5643b5; /* Slightly darker accent */
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 10px 25px rgba(110, 86, 207, 0.3);
+    transition: all 0.3s var(--transition-fast);
+}
+
+.back-to-top i {
+    font-size: 1.5rem;
 }
