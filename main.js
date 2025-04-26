@@ -281,8 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('mousemove', (event) => {
-        targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        targetMouseY = (event.clientY / window.innerHeight) * 2 - 1;
+        targetMouseX = (event.clientX / window.innerWidth) * 0.5 - 1;
+        targetMouseY = (event.clientY / window.innerHeight) * 0.2 - 1;
     });
 });
 
@@ -464,8 +464,8 @@ function initMainScene(loadingScreen, isMobile) {
             `,
             uniforms: {
                 uTime: { value: 0 },
-                uNoiseStrength: { value: 0.6 },
-                uWaveHeight: { value: 0.3 },
+                uNoiseStrength: { value: 0.5 },
+                uWaveHeight: { value: 0.2 },
                 uBaseColor: { value: new THREE.Color(0x444444) },
                 uHighlightColor: { value: new THREE.Color(0x888888) }
             },
@@ -476,7 +476,7 @@ function initMainScene(loadingScreen, isMobile) {
         });
         
         fluidMesh = new THREE.Mesh(fluidGeometry, fluidMaterial);
-        fluidMesh.rotation.x = -Math.PI * 0.45;
+        fluidMesh.rotation.x = -Math.PI * 0.01;
         fluidMesh.position.set(0, -2, 0);
         scene.add(fluidMesh);
         
@@ -547,7 +547,7 @@ function initMainScene(loadingScreen, isMobile) {
                 opacities: opacities,
                 angle: angle,
                 radius: radius,
-                speed: 0.02 + Math.random() * 0.03,
+                speed: 0.01 + Math.random() * 0.03,
                 centerX: centerX,
                 centerY: centerY
             });
@@ -569,8 +569,8 @@ function initMainScene(loadingScreen, isMobile) {
         
         document.addEventListener('touchmove', (event) => {
             if (event.touches.length > 0) {
-                targetMouseX = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
-                targetMouseY = (event.touches[0].clientY / window.innerHeight) * 2 - 1;
+                targetMouseX = (event.touches[0].clientX / window.innerWidth) * 0.5 - 1;
+                targetMouseY = (event.touches[0].clientY / window.innerHeight) * 0.2 - 1;
                 
                 if (renderer && event.target === renderer.domElement) {
                     event.preventDefault();
@@ -621,7 +621,7 @@ function initMainScene(loadingScreen, isMobile) {
 
             maxScrollForZoom = document.documentElement.scrollHeight - window.innerHeight;
             const scrollProgress = Math.max(0, Math.min(scrollY / maxScrollForZoom, 1));
-            targetZoom = 40 - (40 - maxZoom) * scrollProgress;
+            targetZoom = 40 - (40 - maxZoom) * 0.5* scrollProgress;
             
             scrollSpeed_3D = Math.abs(scrollY - lastScrollY_3D);
             lastScrollY_3D = scrollY;
@@ -652,20 +652,20 @@ function initMainScene(loadingScreen, isMobile) {
             const elapsedTime = clock.getElapsedTime();
             const deltaTime = clock.getDelta();
             
-            currentZoom += (targetZoom - currentZoom) * 0.05;
+            currentZoom += (targetZoom - currentZoom) * 0.03;
             camera.position.z = currentZoom;
             
             camera.position.x = Math.sin(elapsedTime * 0.2) * 1.5;
             camera.position.y = Math.cos(elapsedTime * 0.15) * 1.5;
             
-            const scrollEffectRotation = Math.min(scrollSpeed_3D * 0.0001, maxScrollSpeedEffect);
+            const scrollEffectRotation = Math.min(scrollSpeed_3D * 0.00002, maxScrollSpeedEffect);
             scene.rotation.y += scrollEffectRotation;
 
             if (scrollSpeed_3D > 0) {
                 scrollSpeed_3D *= 0.95;
             } else {
                 if (Math.abs(scene.rotation.y) > 0.0001) {
-                     scene.rotation.y += (0 - scene.rotation.y) * 0.01;
+                     scene.rotation.y += (0 - scene.rotation.y) * 0.001;
                 }
             }
             
@@ -675,7 +675,7 @@ function initMainScene(loadingScreen, isMobile) {
             mouseY += (targetMouseY - mouseY) * 0.05;
             
             fluidMesh.rotation.x = -Math.PI * 0.45 + mouseY * 0.1;
-            fluidMesh.rotation.y = mouseX * 0.1;
+            fluidMesh.rotation.y = mouseX * 0.01;
             fluidMesh.rotation.z = mouseX * mouseY * 0.01;
             
             pointLight1.position.x = Math.sin(elapsedTime * 0.5) * 15;
