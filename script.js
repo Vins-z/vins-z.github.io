@@ -800,8 +800,8 @@ try {
         }
     });
 
-    // Ensure cleanup when navigating away
-    window.addEventListener('unload', cleanup);
+    // Ensure cleanup when navigating away - using pagehide instead of deprecated unload
+    window.addEventListener('pagehide', cleanup);
 
 } catch (error) {
     console.error('Fluid effect initialization failed:', error);
