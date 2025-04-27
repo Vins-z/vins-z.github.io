@@ -307,14 +307,10 @@ document.addEventListener('DOMContentLoaded', () => {
             targetMouseX = (event.touches[0].clientX / window.innerWidth) * 0.5 - 1;
             targetMouseY = (event.touches[0].clientY / window.innerHeight) * 0.2 - 1;
             
-            // Remove the preventDefault that blocks scrolling
-            // Only prevent default if we're interacting with the canvas renderer
-            if (renderer && event.target === renderer.domElement) {
-                // Still prevent default on the canvas itself if needed
-                event.preventDefault();
-            }
+            // Never call preventDefault - allow natural scrolling
+            // Remove the condition that was checking for renderer.domElement
         }
-    }, { passive: true }); // Set to true to improve scrolling
+    }, { passive: true });
 });
 
 function initMainScene(loadingScreen, isMobile) {
