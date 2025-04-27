@@ -27,6 +27,30 @@ function checkMobile() {
 document.addEventListener('DOMContentLoaded', () => {
     isMobile = checkMobile();
     
+    // Initialize Typed.js
+    const typedElement = document.getElementById('typed-element');
+    if (typedElement) {
+        const typed = new Typed('#typed-element', {
+            stringsElement: '#typed-strings',
+            typeSpeed: 80,
+            backSpeed: 50,
+            backDelay: 2000,
+            startDelay: 1000,
+            loop: false,
+            showCursor: true,
+            cursorChar: '|',
+            autoInsertCss: true,
+            onBegin: (self) => {
+                // Make sure the element is visible when typing starts
+                typedElement.style.opacity = '1';
+            },
+            onComplete: (self) => {
+                // Hide the cursor after typing is complete
+                document.querySelector('.typed-cursor').style.display = 'none';
+            }
+        });
+    }
+    
     const loadingScreen = document.getElementById('loading-screen');
     loadingScreen.style.cssText = `
         position: fixed;
@@ -80,13 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 if (loadingScreen) loadingScreen.style.display = 'none';
                 document.body.style.overflow = '';
-                
-                setTimeout(() => {
-                    const typedText = document.querySelector('.typed-text');
-                    if (typedText) {
-                        typedText.style.borderRight = 'none';
-                    }
-                }, 3500);
             }, 500);
         }
     }, 2000);
@@ -284,6 +301,17 @@ document.addEventListener('DOMContentLoaded', () => {
         targetMouseX = (event.clientX / window.innerWidth) * 0.5 - 1;
         targetMouseY = (event.clientY / window.innerHeight) * 0.2 - 1;
     });
+
+    document.addEventListener('touchmove', (event) => {
+        if (event.touches.length > 0) {
+            targetMouseX = (event.touches[0].clientX / window.innerWidth) * 0.5 - 1;
+            targetMouseY = (event.touches[0].clientY / window.innerHeight) * 0.2 - 1;
+            
+            if (renderer && event.target === renderer.domElement) {
+                event.preventDefault();
+            }
+        }
+    }, { passive: false });
 });
 
 function initMainScene(loadingScreen, isMobile) {
@@ -566,17 +594,6 @@ function initMainScene(loadingScreen, isMobile) {
         
         morphMesh = new THREE.Mesh(morphGeometry, morphMaterial);
         scene.add(morphMesh);
-        
-        document.addEventListener('touchmove', (event) => {
-            if (event.touches.length > 0) {
-                targetMouseX = (event.touches[0].clientX / window.innerWidth) * 0.5 - 1;
-                targetMouseY = (event.touches[0].clientY / window.innerHeight) * 0.2 - 1;
-                
-                if (renderer && event.target === renderer.domElement) {
-                    event.preventDefault();
-                }
-            }
-        }, { passive: false });
         
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;

@@ -16,6 +16,9 @@
     <meta name="twitter:description" content="A showcase of professional work by Vinayak Kumar, specializing in Deep Learning.">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="canonical" href="https://vins-z.github.io/">
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="print.css" media="print">
@@ -24,7 +27,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://unpkg.com/@oddbird/popover-polyfill@1.0.0/dist/popover-fn.js"></script>
+    <!-- Typed.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js" integrity="sha512-3J8teBiHrSyaaRBajZyIEtpDsXdPq1gsznKWIVb5CnorQuFhjWGhWe54z8YNnHHr7MZuExb9m5kvf964HiT1Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -69,6 +73,10 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52CFPVL8"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    
+    <!-- Fluid cursor effect canvas -->
+    <canvas id="fluid-canvas"></canvas>
+    
     <div id="loading-screen"></div>
     <nav class="navbar">
         <div class="navbar-content">
@@ -92,7 +100,10 @@
         <div class="hero-content">
             <div class="hero-text-container">
                 <div class="typewriter-container">
-                    <h1 class="typed-text">From idea to impact.</h1>
+                    <h1 id="typed-element" class="typed-text"></h1>
+                    <span id="typed-strings" style="display: none;">
+                        <span>From idea to impact.</span>
+                    </span>
                 </div>
                 <div class="tagline-container">
                     <p class="tagline"><span class="accent-text">Glimmers</span> of insights.</p>
@@ -325,6 +336,8 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/CopyShader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <!-- Fluid cursor effect script -->
+    <script src="script.js" defer></script>
     <!-- Main script -->
     <script src="main.js" defer></script>
     <script>
