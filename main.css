@@ -175,6 +175,7 @@ body {
     width: 100%;
     z-index: 2;
     position: relative;
+    
 }
 
 .hero-text-container {
@@ -196,6 +197,7 @@ body {
     line-height: 1.1;
     position: relative;
     display: inline-block;
+    color: #ffffffb3;
 }
 
 /* Remove CSS typing animation since we're using Typed.js */
@@ -207,19 +209,20 @@ body {
 
 /* Taglines */
 .tagline-container {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
 }
 
 .tagline {
     font-size: 2.2rem;
     color: var(--text);
-    margin-bottom: 0.7rem;
+    margin-bottom: 1rem;
     font-weight: 500;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeUp 1s var(--transition) forwards;
     letter-spacing: -0.01em;
     line-height: 1.3;
+    color: #ffffffb3;
 }
 
 .tagline:nth-child(1) {
@@ -238,6 +241,7 @@ body {
     color: var(--accent);
     font-weight: 700;
     position: relative;
+    margin-bottom: 5rem;
 }
 
 .accent-text::after {
@@ -251,6 +255,7 @@ body {
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.6s var(--transition);
+    
 }
 
 .tagline:hover .accent-text::after {
@@ -258,6 +263,7 @@ body {
 }
 
 .cta-container {
+    position:relative;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -266,7 +272,7 @@ body {
 .cta-btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background: var(--text);
+    background: #f0f0f0ce;
     color: var(--bg);
     text-decoration: none;
     border-radius: 2rem;
