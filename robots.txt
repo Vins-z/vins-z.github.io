@@ -1,0 +1,11 @@
+# Allow all search engines to crawl and index the site
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://vins-z.github.io/sitemap.xml
+
+# Prevent access to specific files that should not be indexed
+Disallow: /.git/
+Disallow: /.vscode/
+Disallow: /.DS_Store 

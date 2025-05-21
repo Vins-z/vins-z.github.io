@@ -263,34 +263,66 @@ body {
 }
 
 .cta-container {
-    position:relative;
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 3rem;
+    max-width: 450px;
 }
 
 .cta-btn {
     display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background: #f0f0f0ce;
-    color: var(--bg);
+    padding: 0.75rem 1.8rem;
+    background: transparent;
+    color: var(--text);
     text-decoration: none;
-    border-radius: 2rem;
+    border-radius: 0;
     font-weight: 500;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeUp 0.8s var(--transition) forwards;
     animation-delay: 3s;
-    transition: all 0.3s var(--transition-fast);
+    transition: all 0.4s var(--transition-fast);
     letter-spacing: 0.03em;
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    width: auto;
+    align-self: flex-start;
+    min-width: 180px;
+    text-align: left;
+}
+
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s var(--transition);
+    z-index: -1;
+    opacity: 0.1;
 }
 
 .cta-btn:hover {
-    background: var(--accent);
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(110, 86, 207, 0.3);
+    background: transparent;
+    transform: translateX(10px);
+    box-shadow: -5px 5px 20px rgba(110, 86, 207, 0.2);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.cta-btn:hover::before {
+    width: 100%;
+}
+
+.cta-btn:nth-child(1) {
+    animation-delay: 3s;
 }
 
 .cta-btn:nth-child(2) {
@@ -299,6 +331,21 @@ body {
 
 .cta-btn:nth-child(3) {
     animation-delay: 3.4s;
+}
+
+/* Right arrow icon for CTA buttons */
+.cta-btn::after {
+    content: '→';
+    position: absolute;
+    right: 1.5rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s var(--transition);
+}
+
+.cta-btn:hover::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .cube-container {
@@ -520,23 +567,62 @@ body {
 }
 
 .Submit-button {
-    padding: 1rem;
-    border: none;
-    border-radius: 50px;
-    background: var(--text);
-    color: var(--bg);
+    padding: 0.75rem 1.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    background: transparent;
+    color: var(--text);
     font-family: 'Quicksand', sans-serif;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s var(--transition-fast);
+    transition: all 0.4s var(--transition-fast);
     letter-spacing: 0.03em;
     margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    min-width: 180px;
+    text-align: left;
+}
+
+.Submit-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s var(--transition);
+    z-index: -1;
+    opacity: 0.1;
+}
+
+.Submit-button::after {
+    content: '→';
+    position: absolute;
+    right: 1.5rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s var(--transition);
 }
 
 .Submit-button:hover {
-    background: var(--accent);
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(110, 86, 207, 0.3);
+    background: transparent;
+    transform: translateX(10px);
+    box-shadow: -5px 5px 20px rgba(110, 86, 207, 0.2);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.Submit-button:hover::before {
+    width: 100%;
+}
+
+.Submit-button:hover::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* Footer */
@@ -731,15 +817,13 @@ footer {
     }
     
     .cta-container {
-        flex-direction: column;
-        align-items: center;
+        gap: 1rem;
+        margin-top: 2.5rem;
     }
     
     .cta-btn {
-        margin: 0.5rem 0;
-        width: 50%;
-        justify-content: left;
-        justify-items: left;
+        padding: 0.6rem 1.4rem;
+        min-width: 160px;
     }
     
     .menu-links a {
@@ -785,6 +869,11 @@ footer {
     
     .cube-container {
         opacity: 0.25; /* Lower opacity on mobile for better text readability */
+    }
+    
+    .Submit-button {
+        padding: 0.6rem 1.4rem;
+        min-width: 160px;
     }
 }
 
@@ -840,22 +929,24 @@ footer {
     /* Smaller CTA buttons for mobile */
     .cta-btn {
         font-size: 0.9rem;
-        padding: 0.6rem 1.2rem;
-        margin: 0.4rem 0;
-        max-width: 220px;
+        padding: 0.5rem 1.2rem;
+        min-width: 140px;
     }
     
     /* Adjust the CTA container for better mobile layout */
     .cta-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        gap: 0.5rem;
-        margin-top: 1.5rem;
+        margin-top: 2rem;
+        gap: 0.8rem;
     }
+    
     .skill-list, .interest-list {
         grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
+    }
+    
+    .Submit-button {
+        font-size: 0.9rem;
+        padding: 0.5rem 1.2rem;
+        min-width: 140px;
     }
 }
 
@@ -865,7 +956,7 @@ footer {
     .cta-btn {
         font-size: 0.8rem;
         padding: 0.5rem 1rem;
-        max-width: 200px;
+        min-width: 120px;
     }
     
     .hero-text-container {
@@ -878,6 +969,12 @@ footer {
     
     .tagline {
         font-size: 1rem !important;
+    }
+    
+    .Submit-button {
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+        min-width: 120px;
     }
 }
 

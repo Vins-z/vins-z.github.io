@@ -2,27 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Explore the portfolio of Vinayak Kumar, an Engineer specializing in Deep Learning. Discover innovative AI projects and my contributions to the field.">
-    <meta name="keywords" content="portfolio, Vinayak Kumar, Engineer, Deep Learning, AI, Machine Learning, projects">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Vinayak Kumar | AI & Deep Learning Engineer - Portfolio showcasing innovative projects in machine learning, computer vision, and data science. Expertise in TensorFlow, PyTorch, and Python development.">
+    <meta name="keywords" content="Vinayak Kumar, Deep Learning Engineer, AI Developer, Machine Learning Expert, Portfolio, Computer Vision, TensorFlow, PyTorch, Python Developer, Data Science">
     <meta name="author" content="Vinayak Kumar">
-    <meta property="og:title" content="Vinayak Kumar's Portfolio">
-    <meta property="og:description" content="A showcase of professional work by Vinayak Kumar, specializing in Deep Learning.">
+    <meta property="og:title" content="Vinayak Kumar | AI & Deep Learning Engineer Portfolio">
+    <meta property="og:description" content="Explore cutting-edge AI projects and deep learning solutions by Vinayak Kumar. Specializing in machine learning, computer vision, and innovative data science applications.">
     <meta property="og:url" content="https://vins-z.github.io/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://vins-z.github.io/profile.jpg">
+    <meta property="og:site_name" content="Vinayak Kumar - Portfolio">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Vinayak Kumar's Portfolio">
-    <meta name="twitter:description" content="A showcase of professional work by Vinayak Kumar, specializing in Deep Learning.">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#000000">
+    <meta name="twitter:title" content="Vinayak Kumar | AI & Deep Learning Engineer">
+    <meta name="twitter:description" content="Explore cutting-edge AI projects and deep learning solutions by Vinayak Kumar. Specializing in machine learning, computer vision, and innovative data science applications.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="theme-color" content="#6e56cf">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="alternate icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="canonical" href="https://vins-z.github.io/">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="print.css" media="print">
-    <title>Vinayak - Portfolio</title>
+    <title>Vinayak Kumar | AI & Deep Learning Engineer Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
@@ -51,19 +53,69 @@
       "@type": "Person",
       "name": "Vinayak Kumar",
       "url": "https://vins-z.github.io/",
-      "jobTitle": "Engineer",
-      "worksFor": {
-        "@type": "Organization",
-        "name": ""
-      },
+      "image": "https://vins-z.github.io/profile.jpg",
+      "jobTitle": "AI & Deep Learning Engineer",
+      "description": "AI & Deep Learning Engineer specializing in computer vision, machine learning, and data science applications",
+      "sameAs": [
+        "https://linkedin.com/in/vinayak-kumar-381622210",
+        "https://github.com/Vins-z"
+      ],
       "alumniOf": {
         "@type": "EducationalOrganization",
         "name": "Vellore Institute of Technology (VIT)"
       },
-      "knowsAbout": ["Deep Learning", "Machine Learning", "Computer Vision", "Python", "Java"],
-      "sameAs": [
-        "https://linkedin.com/in/vinayak-kumar-381622210",
-        "https://github.com/Vins-z"
+      "knowsAbout": [
+        "Deep Learning",
+        "Machine Learning", 
+        "Computer Vision", 
+        "Python", 
+        "TensorFlow", 
+        "PyTorch",
+        "Data Science",
+        "Business Analytics"
+      ],
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "AI & Deep Learning Engineer",
+        "skills": "Machine Learning, Computer Vision, TensorFlow, PyTorch, Python, Data Analysis"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://vins-z.github.io/"
+      }
+    }
+    </script>
+    
+    <!-- Breadcrumb schema for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://vins-z.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Expertise",
+          "item": "https://vins-z.github.io/#skills"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Projects",
+          "item": "https://vins-z.github.io/#projects"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Contact",
+          "item": "https://vins-z.github.io/#contact"
+        }
       ]
     }
     </script>
@@ -379,6 +431,21 @@
             checkMobile();
             window.addEventListener('resize', checkMobile);
         });
+    </script>
+
+    <script>
+        // Register service worker for improved performance and offline capabilities
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
     </script>
 </body>
 </html>

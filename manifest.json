@@ -1,0 +1,38 @@
+{
+  "name": "Vinayak Kumar | AI & Deep Learning Engineer",
+  "short_name": "Vinayak Kumar",
+  "description": "Portfolio of Vinayak Kumar, AI & Deep Learning Engineer specializing in machine learning, computer vision, and data science applications.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#6e56cf",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "orientation": "portrait",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["portfolio", "technology", "artificial intelligence", "developer"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "View Projects",
+      "url": "/#projects",
+      "description": "See my latest projects"
+    },
+    {
+      "name": "Contact Me",
+      "url": "/#contact",
+      "description": "Get in touch with me"
+    }
+  ]
+} 
